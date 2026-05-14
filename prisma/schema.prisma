@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UnitType {
+  G
+  KG
+  ML
+  L
+  UNIT
+}
+
+enum NovaClassification {
+  NOVA_1
+  NOVA_2
+  NOVA_3
+  NOVA_4
+}
+
+model Ingredient {
+  id                 Int                 @id @default(autoincrement())
+
+  name               String
+  brand              String?
+
+  unit               UnitType
+
+  novaClassification NovaClassification
+
+  compositionLabel   String              @db.Text
+
+  isNovaVerified     Boolean             @default(false)
+
+  purchasePrice      Decimal             @db.Decimal(10,2)
+  purchaseQuantity   Decimal             @db.Decimal(10,2)
+
+  calories           Decimal?            @db.Decimal(10,2)
+  proteins           Decimal?            @db.Decimal(10,2)
+  carbs              Decimal?            @db.Decimal(10,2)
+  fats               Decimal?            @db.Decimal(10,2)
+  fiber              Decimal?            @db.Decimal(10,2)
+
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
