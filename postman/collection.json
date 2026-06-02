@@ -1,0 +1,727 @@
+{
+  "info": {
+    "_postman_id": "c3252017-1c4d-4a56-aa44-5006c6d6fae7",
+    "name": "Empada Cearense - MVP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-05-13T15:33:33.000Z",
+    "updatedAt": "2026-05-14T21:02:16.000Z",
+    "lastUpdatedBy": "30034217",
+    "uid": "30034217-c3252017-1c4d-4a56-aa44-5006c6d6fae7"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "997a46f5-55e6-4c5d-8edd-1c776921109e",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "a7428c11-202b-4b0f-98b6-c44d8250e3e9",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/health",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Generated from cURL: curl -X GET \"{{URL}}{{PORT}}/health\""
+      },
+      "response": [],
+      "createdAt": "2026-05-13T15:34:12.000Z",
+      "updatedAt": "2026-05-13T15:34:29.000Z",
+      "uid": "30034217-a7428c11-202b-4b0f-98b6-c44d8250e3e9"
+    },
+    {
+      "name": "Cadastrar Ingrediente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "e8d21575-9086-44c9-95b8-6a61d1593a5f",
+            "exec": [
+              "",
+              "// Teste de sucesso - Status 201",
+              "pm.test(\"Status 201 - Ingrediente cadastrado com sucesso\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    const json = pm.response.json();",
+              "",
+              "    pm.test(\"Resposta contém id do ingrediente\", function () {",
+              "        pm.expect(json).to.have.property(\"id\");",
+              "        pm.expect(json.id).to.be.a(\"number\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém name\", function () {",
+              "        pm.expect(json).to.have.property(\"name\");",
+              "        pm.expect(json.name).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém brand\", function () {",
+              "        pm.expect(json).to.have.property(\"brand\");",
+              "        pm.expect(json.brand).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém unit\", function () {",
+              "        pm.expect(json).to.have.property(\"unit\");",
+              "        pm.expect(json.unit).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém novaClassification\", function () {",
+              "        pm.expect(json).to.have.property(\"novaClassification\");",
+              "        pm.expect(json.novaClassification).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém compositionLabel\", function () {",
+              "        pm.expect(json).to.have.property(\"compositionLabel\");",
+              "        pm.expect(json.compositionLabel).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém purchasePrice\", function () {",
+              "        pm.expect(json).to.have.property(\"purchasePrice\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém purchaseQuantity\", function () {",
+              "        pm.expect(json).to.have.property(\"purchaseQuantity\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém createdAt\", function () {",
+              "        pm.expect(json).to.have.property(\"createdAt\");",
+              "        pm.expect(json.createdAt).to.be.a(\"string\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém updatedAt\", function () {",
+              "        pm.expect(json).to.have.property(\"updatedAt\");",
+              "        pm.expect(json.updatedAt).to.be.a(\"string\");",
+              "    });",
+              "}",
+              "",
+              "if (pm.response.code === 400) {",
+              "    pm.test(\"Status 400 - Erro de validação retornado\", function () {",
+              "        pm.response.to.have.status(400);",
+              "    });",
+              "",
+              "    pm.test(\"Resposta de erro contém mensagem\", function () {",
+              "        const json = pm.response.json();",
+              "        pm.expect(json).to.satisfy(function (body) {",
+              "            return body.hasOwnProperty(\"message\") || body.hasOwnProperty(\"error\");",
+              "        });",
+              "    });",
+              "}",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "a6c13307-232e-4f5d-8d56-3a82347c1a6f",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "disabled": false
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Manteiga\", \n    \"brand\": \"Aviação\", \n    \"unit\": \"G\", \n    \"novaClassification\": \"NOVA_2\", \n    \"compositionLabel\": \"Leite pasteurizado, sal, urucum\",\n    \"purchasePrice\": 14.5, \n    \"purchaseQuantity\": 500\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{URL}}{{PORT}}/ingredients",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "ingredients"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST \"{{URL}}{{PORT}}/ingredients\" -H \"Content-Type: application/json\" -d '{\"name\": \"Manteiga\", \"brand\": \"Aviação\", \"unit\": \"G\", \"novaClassification\": \"NOVA_2\", \"compositionLabel\": \"Leite pasteurizado, sal, urucum\", \"purchasePrice\": 14.5, \"purchaseQuantity\": 500}'"
+      },
+      "response": [],
+      "createdAt": "2026-05-14T21:01:56.000Z",
+      "updatedAt": "2026-05-14T21:32:41.000Z",
+      "uid": "30034217-a6c13307-232e-4f5d-8d56-3a82347c1a6f"
+    },
+    {
+      "name": "Listar Ingredientes",
+      "id": "a7b36e5a-a822-4674-a094-6abbec43bdde",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/ingredients",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "ingredients"
+          ]
+        },
+        "description": "Generated from cURL: curl --request GET '{{URL}}{{PORT}}/ingredients'"
+      },
+      "response": [],
+      "createdAt": "2026-05-14T21:02:16.000Z",
+      "updatedAt": "2026-05-14T21:02:16.000Z",
+      "uid": "30034217-a7b36e5a-a822-4674-a094-6abbec43bdde"
+    },
+    {
+      "name": "Listar Ingredientes com Busca e Paginação",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Resposta contém metadados de paginação\", function () {",
+              "    pm.expect(json).to.have.property(\"meta\");",
+              "    pm.expect(json.meta).to.have.property(\"total\");",
+              "    pm.expect(json.meta).to.have.property(\"page\");",
+              "    pm.expect(json.meta).to.have.property(\"limit\");",
+              "    pm.expect(json.meta).to.have.property(\"totalPages\");",
+              "});",
+              "",
+              "pm.test(\"Resposta contém lista de itens\", function () {",
+              "    pm.expect(json).to.have.property(\"items\");",
+              "    pm.expect(json.items).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/ingredients?page=1&limit=5&search=Manteiga",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "ingredients"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "search",
+              "value": "Manteiga"
+            }
+          ]
+        },
+        "description": "Lista de ingredientes com paginação e busca por nome"
+      },
+      "response": []
+    },
+    {
+      "name": "Cadastrar Receita",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "if (pm.response.code === 201) {",
+              "    const json = pm.response.json();",
+              "    pm.test(\"Receita criada possui ID e campos básicos\", function () {",
+              "        pm.expect(json).to.have.property(\"id\");",
+              "        pm.expect(json.id).to.be.a(\"number\");",
+              "        pm.expect(json.name).to.equal(\"Empada de Frango Clássica\");",
+              "        pm.expect(json.prepTime).to.equal(45);",
+              "        pm.expect(json).to.have.property(\"classification\");",
+              "        pm.expect(json.classification).to.equal(\"Natural\");",
+              "    });",
+              "",
+              "    pm.test(\"Lista de ingredientes achatada e sem IDs internos do banco\", function () {",
+              "        pm.expect(json).to.have.property(\"ingredients\");",
+              "        pm.expect(json.ingredients).to.be.an(\"array\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"quantity\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"compositionLabel\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"isNovaVerified\");",
+              "        pm.expect(json.ingredients[0]).to.not.have.property(\"recipeId\");",
+              "    });",
+              "",
+              "    pm.test(\"Resposta contém passos estruturados e ordenados\", function () {",
+              "        pm.expect(json).to.have.property(\"steps\");",
+              "        pm.expect(json.steps).to.be.an(\"array\");",
+              "        pm.expect(json.steps[0]).to.have.property(\"order\");",
+              "        pm.expect(json.steps[0]).to.have.property(\"description\");",
+              "        pm.expect(json.steps[0].order).to.equal(1);",
+              "    });",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Empada de Frango Clássica\",\n    \"description\": \"Nossa empada de frango com tempero especial cearense.\",\n    \"yield\": 12.00,\n    \"yieldUnit\": \"UNIT\",\n    \"prepTime\": 45,\n    \"category\": \"Salgados\",\n    \"prepMethod\": \"Prepare a massa podre, monte e asse.\",\n    \"ingredients\": [\n        {\n            \"ingredientId\": 1,\n            \"quantity\": 250.00\n        }\n    ],\n    \"steps\": [\n        {\n            \"order\": 1,\n            \"description\": \"Prepare a massa podre com farinha e manteiga.\"\n        },\n        {\n            \"order\": 2,\n            \"description\": \"Refogue o recheio de frango e monte a empada.\"\n        },\n        {\n            \"order\": 3,\n            \"description\": \"Asse por 30 minutos em forno a 200 graus.\"\n        }\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes"
+          ]
+        },
+        "description": "Cadastra uma nova receita com ingredientes e passos associados"
+      },
+      "response": []
+    },
+    {
+      "name": "Cadastrar Receita - Erro de Ingrediente Inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Retorna mensagem clara detalhando os IDs inexistentes\", function () {",
+              "    pm.expect(json).to.have.property(\"message\");",
+              "    pm.expect(json.message).to.include(\"não foram encontrados\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Empada de Frango Clássica\",\n    \"yield\": 12.00,\n    \"yieldUnit\": \"UNIT\",\n    \"prepTime\": 45,\n    \"category\": \"Salgados\",\n    \"prepMethod\": \"Misture tudo\",\n    \"ingredients\": [\n        {\n            \"ingredientId\": 9999,\n            \"quantity\": 250.00\n        }\n    ],\n    \"steps\": [\n        {\n            \"order\": 1,\n            \"description\": \"Misture tudo\"\n        }\n    ]\n}"
+        },
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes"
+          ]
+        },
+        "description": "Valiga se a API bloqueia a inserção de receitas com ingredientes inválidos"
+      },
+      "response": []
+    },
+    {
+      "name": "Listar Receitas",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Resposta contém metadados de paginação de receitas\", function () {",
+              "    pm.expect(json).to.have.property(\"meta\");",
+              "    pm.expect(json.meta).to.have.property(\"total\");",
+              "    pm.expect(json.meta).to.have.property(\"page\");",
+              "    pm.expect(json.meta).to.have.property(\"limit\");",
+              "    pm.expect(json.meta).to.have.property(\"totalPages\");",
+              "});",
+              "",
+              "pm.test(\"Resposta contém lista de receitas\", function () {",
+              "    pm.expect(json).to.have.property(\"items\");",
+              "    pm.expect(json.items).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes?page=1&limit=5&category=Salgados",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "category",
+              "value": "Salgados"
+            }
+          ]
+        },
+        "description": "Lista todas as receitas cadastradas de forma paginada e com filtros"
+      },
+      "response": []
+    },
+    {
+      "name": "Obter Receita por ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Resposta contém dados da receita e passos\", function () {",
+              "    pm.expect(json).to.have.property(\"id\");",
+              "    pm.expect(json).to.have.property(\"name\");",
+              "    pm.expect(json).to.have.property(\"ingredients\");",
+              "    pm.expect(json).to.have.property(\"steps\");",
+              "    pm.expect(json).to.have.property(\"classification\");",
+              "    pm.expect(json.steps).to.be.an(\"array\");",
+              "    if (json.steps.length > 0) {",
+              "        pm.expect(json.steps[0]).to.have.property(\"order\");",
+              "        pm.expect(json.steps[0]).to.have.property(\"description\");",
+              "    }",
+              "    if (json.ingredients.length > 0) {",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"compositionLabel\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"isNovaVerified\");",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes/1",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes",
+            "1"
+          ]
+        },
+        "description": "Busca os detalhes de uma receita específica por ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Obter Receita por ID - Erro Inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Retorna mensagem de erro apropriada\", function () {",
+              "    pm.expect(json).to.have.property(\"message\");",
+              "    pm.expect(json.message).to.include(\"não encontrada\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes/9999",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes",
+            "9999"
+          ]
+        },
+        "description": "Garante 404 para ID inexistente de receita"
+      },
+      "response": []
+    },
+    {
+      "name": "Calcular Custo da Receita",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Resposta contém dados da receita e cálculo de custo e breakdown financeiro\", function () {",
+              "    pm.expect(json).to.have.property(\"recipeId\");",
+              "    pm.expect(json).to.have.property(\"recipeName\");",
+              "    pm.expect(json).to.have.property(\"totalBaseCost\");",
+              "    pm.expect(json).to.have.property(\"unitBaseCost\");",
+              "    pm.expect(json).to.have.property(\"laborCost\");",
+              "    pm.expect(json).to.have.property(\"operationalCost\");",
+              "    pm.expect(json).to.have.property(\"packagingCost\");",
+              "    pm.expect(json).to.have.property(\"totalProductionCost\");",
+              "    pm.expect(json).to.have.property(\"profitAmount\");",
+              "    pm.expect(json).to.have.property(\"suggestedPrice\");",
+              "    pm.expect(json).to.have.property(\"unitSuggestedPrice\");",
+              "    pm.expect(json.totalBaseCost).to.be.a(\"number\");",
+              "    pm.expect(json.suggestedPrice).to.be.a(\"number\");",
+              "    pm.expect(json.unitSuggestedPrice).to.be.a(\"number\");",
+              "});",
+              "",
+              "pm.test(\"Resposta contém lista de custos de ingredientes\", function () {",
+              "    pm.expect(json).to.have.property(\"ingredients\");",
+              "    pm.expect(json.ingredients).to.be.an(\"array\");",
+              "    if (json.ingredients.length > 0) {",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"ingredientId\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"name\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"quantityUsed\");",
+              "        pm.expect(json.ingredients[0]).to.have.property(\"proportionalCost\");",
+              "    }",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes/1/cost",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes",
+            "1",
+            "cost"
+          ]
+        },
+        "description": "Calcula o custo proporcional acumulado de ingredientes de uma receita"
+      },
+      "response": []
+    },
+    {
+      "name": "Calcular Custo da Receita - Erro Inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404\", function () {",
+              "    pm.response.to.have.status(404);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Retorna mensagem de erro apropriada\", function () {",
+              "    pm.expect(json).to.have.property(\"message\");",
+              "    pm.expect(json.message).to.include(\"não encontrada\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/recipes/9999/cost",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "recipes",
+            "9999",
+            "cost"
+          ]
+        },
+        "description": "Garante 404 ao tentar precificar receita inexistente"
+      },
+      "response": []
+    },
+    {
+      "name": "Obter Configuração de Preço",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Resposta contém parâmetros de configuração\", function () {",
+              "    pm.expect(json).to.have.property(\"id\");",
+              "    pm.expect(json).to.have.property(\"hourlyRate\");",
+              "    pm.expect(json).to.have.property(\"profitMargin\");",
+              "    pm.expect(json).to.have.property(\"operationalTax\");",
+              "    pm.expect(json).to.have.property(\"packagingCost\");",
+              "    pm.expect(json.hourlyRate).to.be.a(\"number\");",
+              "    pm.expect(json.profitMargin).to.be.a(\"number\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{URL}}{{PORT}}/pricing/config",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "pricing",
+            "config"
+          ]
+        },
+        "description": "Recupera as configurações operacionais e financeiras de precificação"
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar Configuração de Preço",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201 ou 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+              "});",
+              "",
+              "const json = pm.response.json();",
+              "pm.test(\"Parâmetros foram atualizados corretamente\", function () {",
+              "    pm.expect(json.hourlyRate).to.equal(25.00);",
+              "    pm.expect(json.profitMargin).to.equal(120.00);",
+              "    pm.expect(json.operationalTax).to.equal(10.00);",
+              "    pm.expect(json.packagingCost).to.equal(1.50);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"hourlyRate\": 25.00,\n    \"profitMargin\": 120.00,\n    \"operationalTax\": 10.00,\n    \"packagingCost\": 1.50\n}"
+        },
+        "url": {
+          "raw": "{{URL}}{{PORT}}/pricing/config",
+          "host": [
+            "{{URL}}{{PORT}}"
+          ],
+          "path": [
+            "pricing",
+            "config"
+          ]
+        },
+        "description": "Atualiza ou insere as configurações globais de precificação"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "URL",
+      "value": "http://localhost:"
+    },
+    {
+      "key": "PORT",
+      "value": "3000"
+    }
+  ]
+}

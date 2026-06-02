@@ -47,4 +47,70 @@ model Ingredient {
 
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
+
+  recipes            RecipeIngredient[]
+}
+
+model Recipe {
+  id           Int                @id @default(autoincrement())
+  name         String
+  description  String?            @db.Text
+  
+  yield        Decimal            @db.Decimal(10,2)
+  yieldUnit    UnitType           @default(UNIT)
+  
+  prepTime     Int
+  category     String
+  
+  prepMethod   String?            @db.Text
+  
+  ingredients  RecipeIngredient[]
+  steps        RecipeStep[]
+  
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+}
+
+model RecipeStep {
+  id           Int        @id @default(autoincrement())
+  
+  recipeId     Int
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  
+  order        Int
+  description  String     @db.Text
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([recipeId, order])
+}
+
+model RecipeIngredient {
+  id           Int        @id @default(autoincrement())
+  
+  recipeId     Int
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  
+  ingredientId Int
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+  
+  quantity     Decimal    @db.Decimal(10,2)
+  
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([recipeId, ingredientId])
+}
+
+model OperationalCostConfig {
+  id               Int      @id @default(autoincrement())
+  
+  hourlyRate       Decimal  @db.Decimal(10,2)
+  profitMargin     Decimal  @db.Decimal(10,2)
+  operationalTax   Decimal  @db.Decimal(10,2)
+  packagingCost    Decimal  @db.Decimal(10,2)
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
